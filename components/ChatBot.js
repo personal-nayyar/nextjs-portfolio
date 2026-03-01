@@ -80,7 +80,7 @@ export default function ChatBot() {
   }
 
   const callGeminiAPI = async (message) => {
-    const API_KEY = 'AIzaSyCIDcX9XgU2PKWrWd9Wm5rsj63Edc9Pt3Q'
+    const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${API_KEY}`
     
     const systemPrompt = `You are a professional AI assistant for Mohd Nayyar, a Software Development Engineer 3. 
