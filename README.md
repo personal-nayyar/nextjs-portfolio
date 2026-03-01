@@ -58,7 +58,7 @@ nextjs-portfolio/
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/personal-nayyar/nextjs-portfolio.git
 cd nextjs-portfolio
 ```
 
