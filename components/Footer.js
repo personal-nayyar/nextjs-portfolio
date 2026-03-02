@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer-content">
-          <p>&copy; 2024 Mohd Nayyar. All rights reserved.</p>
+          <p>&copy; 2026 Mohd Nayyar. All rights reserved.</p>
           <div className="footer-social">
             <a href="mailto:personal.nayyar@gmail.com" className="social-link">
               <i className="fas fa-envelope"></i>
