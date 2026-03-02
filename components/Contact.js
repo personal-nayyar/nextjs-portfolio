@@ -30,7 +30,7 @@ export default function Contact() {
               </div>
               <div className="contact-item">
                 <i className="fas fa-download"></i>
-                <a href="https://drive.google.com/uc?export=download&id=17WzNQKk0EIxswl6tm1IWX3uZjUXa6OOv" download>Download CV</a>
+                <a href="https://drive.google.com/file/d/1Xj__gyp5Nmu9188pwpMbWHv_1radiBwg/view?usp=sharing" download>Download CV</a>
               </div>
             </div>
           </div>

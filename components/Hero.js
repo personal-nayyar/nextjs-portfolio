@@ -11,7 +11,7 @@ export default function Hero() {
           <div className="hero-buttons">
             <a href="#contact" className="btn btn-primary">Get In Touch</a>
             <a href="#experience" className="btn btn-outline">View Experience</a>
-            <a href="https://drive.google.com/uc?export=download&id=17WzNQKk0EIxswl6tm1IWX3uZjUXa6OOv" className="btn btn-cv" download>
+            <a href="https://drive.google.com/file/d/1Xj__gyp5Nmu9188pwpMbWHv_1radiBwg/view?usp=sharing" className="btn btn-cv" download>
               <i className="fas fa-download"></i> Download CV
             </a>
           </div>
