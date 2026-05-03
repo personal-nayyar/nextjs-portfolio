@@ -6,7 +6,7 @@ export default function About() {
         <div className="about-content">
           <div className="about-text">
             <p>
-              Professional software developer with around 7 years of experience in designing, developing, and optimizing scalable distributed systems. Specialized in Java ecosystem, microservices architecture, and cloud-native applications with a proven track record of building high-performance systems.
+              Professional software developer with 8 years of experience in designing, developing, and optimizing scalable distributed systems. Specialized in Java ecosystem, microservices architecture, and cloud-native applications with a proven track record of building high-performance systems.
             </p>
             
             {/* Expertise Section */}

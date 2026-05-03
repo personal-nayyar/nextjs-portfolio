@@ -16,10 +16,10 @@ export default function ChatBot() {
   const portfolioData = {
     name: "Mohd Nayyar",
     title: "Software Development Engineer 3",
-    experience: "7+ years",
+    experience: "8 years",
     email: "personal.nayyar@gmail.com",
     phone: "+91 9045313239",
-    location: "Noida, India",
+    location: "Bengaluru",
     linkedin: "linkedin.com/in/mohd-nayyar",
     github: "github.com/personal-nayyar",
     education: {
