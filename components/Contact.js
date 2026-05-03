@@ -26,11 +26,11 @@ export default function Contact() {
               </div>
               <div className="contact-item">
                 <i className="fas fa-map-marker-alt"></i>
-                <span>Noida, India</span>
+                <span>Bengaluru, India</span>
               </div>
               <div className="contact-item">
                 <i className="fas fa-download"></i>
-                <a href="https://drive.google.com/uc?export=download&id=1Xj__gyp5Nmu9188pwpMbWHv_1radiBwg" download>Download CV</a>
+                <a href="https://drive.google.com/file/d/1mLakQSoejx6j38ad2QGiqA8MoUMgGX5n/view" download>Download CV</a>
               </div>
             </div>
           </div>
