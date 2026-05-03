@@ -6,12 +6,12 @@ export default function Hero() {
           <h1 className="hero-title">Hi, I'm Mohd Nayyar</h1>
           <h2 className="hero-subtitle">Software Development Engineer 3</h2>
           <p className="hero-description">
-            Results-driven Senior Software Engineer with 7+ years of experience designing, developing, and optimizing software components using Java, Spring Boot, React and Microservices architecture.
+            Results-driven Senior Software Engineer with 8 years of experience designing, developing, and optimizing software components using Java, Spring Boot, React and Microservices architecture.
           </p>
           <div className="hero-buttons">
             <a href="#contact" className="btn btn-primary">Get In Touch</a>
             <a href="#experience" className="btn btn-outline">View Experience</a>
-            <a href="https://drive.google.com/uc?export=download&id=1Xj__gyp5Nmu9188pwpMbWHv_1radiBwg" className="btn btn-cv" download>
+            <a href="https://drive.google.com/file/d/1mLakQSoejx6j38ad2QGiqA8MoUMgGX5n/view" className="btn btn-cv" download>
               <i className="fas fa-download"></i> Download CV
             </a>
           </div>
