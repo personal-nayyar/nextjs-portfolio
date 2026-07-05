@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { APIProvider } from '../lib/apiProvider'
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
@@ -12,7 +13,6 @@ export default function ChatBot() {
   const [isTyping, setIsTyping] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
   const chatContainerRef = useRef(null)
-
   const postChat = async (messages) => {
     try {
       const r = await fetch("/api/chat/", {
@@ -82,7 +82,6 @@ export default function ChatBot() {
     try {
       const result = await postChat(neutralMessages)
       const response = result.message?.text || result.error || "I apologize, but I'm having trouble connecting to the AI service right now. Please try again in a moment. If you have questions about Mohd Nayyar's portfolio, feel free to ask specific questions about his experience, skills, or projects!"
-
       // Add AI response
       const aiMessage = { type: 'ai', content: response }
       setMessages(prev => [...prev, aiMessage])
