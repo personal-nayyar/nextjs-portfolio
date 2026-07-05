@@ -19,7 +19,7 @@ A modern, responsive portfolio website built with Next.js 14, featuring the exac
 - **Styling**: CSS3 with custom properties, Flexbox, Grid
 - **Icons**: Font Awesome 6.4.0
 - **Fonts**: Google Fonts (Inter)
-- **Deployment**: Static export ready for Vercel, Netlify, etc.
+- **Deployment**: Node/serverless target (Vercel default Next.js deployment) — the AI chat uses a server-side API route
 
 ## 📁 Project Structure
 
@@ -84,28 +84,28 @@ yarn dev
 npm run dev      # Start development server
 npm run build    # Build for production
 npm run start    # Start production server
-npm run export    # Export static site
 npm run lint      # Run ESLint
 ```
 
 ## 🚀 Deployment
 
+> **Important:** The AI chat assistant is powered by a server-side API route (`/api/chat`), so the app can no longer be shipped as a static export. It must be deployed to a Node/serverless target (e.g. the default Next.js deployment on Vercel). Static-only hosts such as GitHub Pages are **not** supported.
+
+### Environment Variables
+
+Configure the following environment variables on your host (see `.env.example`; for local development copy them into `.env.local`, which is gitignored):
+
+- `CHAT_PROVIDER` — which provider answers chat: `openrouter` (default) or `gemini`
+- `OPENROUTER_API_KEY` — OpenRouter API key (server-side only, never `NEXT_PUBLIC`)
+- `OPENROUTER_MODEL` — OpenRouter model id (e.g. `openai/gpt-oss-120b`)
+- `GEMINI_API_KEY` — *(optional)* Gemini API key, used when `CHAT_PROVIDER=gemini`
+- `GEMINI_MODEL` — *(optional)* Gemini model id (e.g. `gemini-2.5-flash`)
+
 ### Vercel (Recommended)
 1. Push to GitHub
 2. Connect repository to [Vercel](https://vercel.com)
-3. Automatic deployment on every push
-
-### Netlify
-1. Build the project: `npm run build`
-2. Export static: `npm run export`
-3. Upload `out` folder to Netlify
-
-### Static Export
-```bash
-npm run build
-npm run export
-```
-The static files will be in the `out` directory.
+3. Add the environment variables above in the project settings
+4. Automatic deployment on every push
 
 ## 🎨 Design Features
 

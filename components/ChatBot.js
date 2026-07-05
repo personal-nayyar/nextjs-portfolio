@@ -13,114 +13,20 @@ export default function ChatBot() {
   const [isTyping, setIsTyping] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
   const chatContainerRef = useRef(null)
-
-  const portfolioData = {
-    name: "Mohd Nayyar",
-    title: "Software Development Engineer 3",
-    experience: "8 years",
-    email: "personal.nayyar@gmail.com",
-    phone: "+91 9045313239",
-    location: "Bengaluru",
-    linkedin: "linkedin.com/in/mohd-nayyar",
-    github: "github.com/personal-nayyar",
-    education: {
-      degree: "Master of Computer Applications (MCA)",
-      school: "National Institute of Technology, Karnataka",
-      period: "2015 – 2018",
-      cgpa: "8.0/10"
-    },
-    skills: {
-      languages: ["Java 17+", "Python"],
-      frameworks: ["Spring Boot", "JPA/Hibernate", "JUnit/Mockito", "React"],
-      databases: ["MySQL", "PostgreSQL", "Redis", "MongoDB"],
-      cloud: ["AWS", "OCI", "Docker", "Kubernetes"],
-      tools: ["Git", "Maven", "Jenkins", "Kafka"]
-    },
-    experience: [
-      {
-        company: "Oracle Cloud Infrastructure (OCI)",
-        role: "Software Development Engineer 3",
-        period: "May 2024 – Present",
-        description: "Developed workflow orchestration systems, integrated observability, enhanced system reliability by 90%"
-      },
-      {
-        company: "Paytm",
-        role: "Senior Software Engineer",
-        period: "Sep 2020 – Mar 2024",
-        description: "Built Merchant Analytics platform, scaled to 100K+ merchants, reduced operational costs by 40%"
-      },
-      {
-        company: "Cars24",
-        role: "Software Engineer",
-        period: "Jun 2018 – Jul 2020",
-        description: "Built microservices for Dealer Marketplace, reduced latency by 25%"
-      }
-    ],
-    projects: [
-      {
-        name: "Intelligence Data Lake",
-        company: "Oracle",
-        description: "Workflow orchestration system with 90% reduction in stuck executions and 30% performance improvement"
-      },
-      {
-        name: "Merchant Analytics",
-        company: "Paytm",
-        description: "Real-time analytics system serving 100K+ merchants with 3-5x performance improvement"
-      },
-      {
-        name: "Dealer Marketplace",
-        company: "Cars24",
-        description: "Real-time B2B auction platform with 25% latency reduction"
-      }
-    ],
-    certifications: [
-      "Oracle Certified Professional - Java SE 17 Developer",
-      "AWS Certified Developer - Associate",
-      "Oracle Cloud Infrastructure - Developer Professional"
-    ]
-  }
-
-  const callAIProvider = async (message) => {
-    const systemPrompt = `You are a professional AI assistant for Mohd Nayyar, a Software Development Engineer 3. 
-    Your role is to answer questions about Mohd Nayyar's professional portfolio based ONLY on the provided data.
-    
-    Portfolio Data:
-    ${JSON.stringify(portfolioData, null, 2)}
-    
-    Guidelines:
-    1. Answer questions based solely on provided portfolio data
-    2. Be professional, friendly, and helpful
-    3. If information is not available in portfolio data, politely say so
-    4. Provide specific details and metrics when available
-    5. Keep responses SHORT and CONCISE (under 150 words maximum)
-    6. Use markdown formatting for better readability
-    7. For contact inquiries, provide available contact information
-    8. For technical questions, highlight relevant skills and experience
-    9. Be direct and to the point - avoid unnecessary fluff
-    10. Prioritize clarity and brevity
-    
-    Do not:
-    - Make up information not present in portfolio
-    - Provide personal opinions or assumptions
-    - Share sensitive personal information beyond what's in portfolio
-    - Respond to inappropriate or off-topic questions
-    - Write long, rambling responses
-    - Use overly complex language
-    
-    Start responses with a friendly greeting and provide helpful, accurate information about Mohd Nayyar's professional background.`
-    
+  const postChat = async (messages) => {
     try {
-      const apiProvider = APIProvider.fromEnv()
-      const response = await apiProvider.generateContent(systemPrompt, message)
-      return response
+      const r = await fetch("/api/chat/", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages })
+      })
+      return await r.json()
     } catch (error) {
-      console.error('AI Provider Error:', error)
-      return "I apologize, but I'm having trouble connecting to the AI service right now. Please try again in a moment. If you have questions about Mohd Nayyar's portfolio, feel free to ask specific questions about his experience, skills, or projects!"
+      return { error: "Network hiccup — please try again." }
     }
   }
 
 
-  
   const formatChatMessage = (text) => {
     return text
       // Convert markdown links [text](#section) to clickable links
@@ -157,7 +63,7 @@ export default function ChatBot() {
     setMessages(prev => [...prev, userMessage])
     setInput('')
     setIsTyping(true)
-    
+
     // Auto-scroll to bottom after user message
     setTimeout(() => {
       const chatMessages = document.getElementById('chatMessages')
@@ -165,11 +71,17 @@ export default function ChatBot() {
         chatMessages.scrollTop = chatMessages.scrollHeight
       }
     }, 100)
-    
+
+    // Build neutral messages array from prior conversation + new user turn.
+    // State updates are async, so derive from the known prior `messages` directly.
+    const neutralMessages = [...messages, userMessage].map(m => ({
+      role: m.type === 'user' ? 'user' : 'assistant',
+      text: m.content
+    }))
+
     try {
-      // Use AI Provider (Google or OpenRouter based on env)
-      const response = await callAIProvider(messageText)
-      
+      const result = await postChat(neutralMessages)
+      const response = result.message?.text || result.error || "I apologize, but I'm having trouble connecting to the AI service right now. Please try again in a moment. If you have questions about Mohd Nayyar's portfolio, feel free to ask specific questions about his experience, skills, or projects!"
       // Add AI response
       const aiMessage = { type: 'ai', content: response }
       setMessages(prev => [...prev, aiMessage])
