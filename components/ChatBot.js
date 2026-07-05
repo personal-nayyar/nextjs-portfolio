@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { APIProvider } from '../lib/apiProvider'
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
@@ -79,10 +80,7 @@ export default function ChatBot() {
     ]
   }
 
-  const callGeminiAPI = async (message) => {
-    const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${API_KEY}`
-    
+  const callAIProvider = async (message) => {
     const systemPrompt = `You are a professional AI assistant for Mohd Nayyar, a Software Development Engineer 3. 
     Your role is to answer questions about Mohd Nayyar's professional portfolio based ONLY on the provided data.
     
@@ -111,38 +109,12 @@ export default function ChatBot() {
     
     Start responses with a friendly greeting and provide helpful, accurate information about Mohd Nayyar's professional background.`
     
-    const requestBody = {
-      contents: [
-        { parts: [{ text: systemPrompt }] },
-        { parts: [{ text: `User: ${message}` }] }
-      ]
-    }
-    
     try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody)
-      })
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      const data = await response.json()
-      
-      if (data.candidates && data.candidates.length > 0) {
-        const candidate = data.candidates[0]
-        if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
-          return candidate.content.parts[0].text
-        }
-      }
-      
-      throw new Error('No valid response from Gemini API')
+      const apiProvider = APIProvider.fromEnv()
+      const response = await apiProvider.generateContent(systemPrompt, message)
+      return response
     } catch (error) {
-      console.error('Gemini API Error:', error)
+      console.error('AI Provider Error:', error)
       return "I apologize, but I'm having trouble connecting to the AI service right now. Please try again in a moment. If you have questions about Mohd Nayyar's portfolio, feel free to ask specific questions about his experience, skills, or projects!"
     }
   }
@@ -195,8 +167,8 @@ export default function ChatBot() {
     }, 100)
     
     try {
-      // Use Gemini API
-      const response = await callGeminiAPI(messageText)
+      // Use AI Provider (Google or OpenRouter based on env)
+      const response = await callAIProvider(messageText)
       
       // Add AI response
       const aiMessage = { type: 'ai', content: response }
